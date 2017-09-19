@@ -17,7 +17,7 @@ app.options('/', cors());
 app.get('/', cors(), (req, res) => {
 
     res.json({
-        msg: 'Krissen er en fed homoseksuel bög, og team boner er nogle fede noobs'
+        msg: 'Hej fra backend... klokken er ' + new Date().toLocaleString()
     });
 });
 
