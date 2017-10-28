@@ -1,5 +1,5 @@
-import User from '../models/userModel'
-import bcrypt from 'bcrypt'
+const User = require('../models/userModel')
+const bcrypt = require('bcrypt')
 
 exports.createUser = (username, plainPassword) => {
     const password = bcrypt.hashSync(plainPassword, 10)
@@ -13,7 +13,7 @@ exports.createUser = (username, plainPassword) => {
     return user.save()
 }
 
-exports.findUser = (userId) => {
+exports.getUser = (userId) => {
     return User.findById(userId).where('deletedAt').equals(null)
 }
 

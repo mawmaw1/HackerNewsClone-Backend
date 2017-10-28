@@ -1,13 +1,13 @@
-import mongoose from 'mongoose'
+const mongoose = require('mongoose')
 
 const commentSchema = mongoose.Schema({
-    text: String,
-    username: String,
+    text: { type: String, required: true },
+    username: { type: String, required: true },
     karmaPoints: Number,
-    parentComment: mongoose.Types.ObjectId,
+    parentComment: mongoose.Schema.Types.ObjectId,
     createdAt: Date,
     updatedAt: Date,
     deletedAt: Date
 })
 
-const Comment = mongoose.model('Comment', commentSchema)
+module.exports = mongoose.model('Comment', commentSchema)

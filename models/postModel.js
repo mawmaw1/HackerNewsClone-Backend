@@ -1,11 +1,13 @@
-import mongoose from 'mongoose'
+const mongoose = require('mongoose')
 
 const postSchema = mongoose.Schema({
-    title: String,
+    title: { type: String, required: true },
     content: String,
+    url: String,
+    username: String,
     karmaPoints: Number,
     comments: [{
-        type: mongoose.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Comment'
     }],
     createdAt: Date,
@@ -13,4 +15,4 @@ const postSchema = mongoose.Schema({
     deletedAt: Date
 })
 
-const Post = mongoose.model('Post', postSchema)
+module.exports = mongoose.model('Post', postSchema)

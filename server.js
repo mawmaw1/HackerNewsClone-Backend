@@ -4,6 +4,7 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose')
 const morgan = require('morgan')
+const api = require('./router')
 // Constants
 const PORT = 8080;
 const HOST = '0.0.0.0';
@@ -22,6 +23,8 @@ app.get('/', (req, res) => {
         msg: 'Hej fra backend... klokken er ' + new Date().toLocaleString()
     });
 });
+
+app.use(api)
 
 app.listen(PORT, HOST);
 console.log(`Running on http://${HOST}:${PORT}`);

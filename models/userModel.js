@@ -1,12 +1,12 @@
-import mongoose from 'mongoose'
+const mongoose = require('mongoose')
 
 const userSchema = mongoose.Schema({
     username: { type: String, unique: true },
-    password: String,
+    password:  { type: String, required: true },
     karmaPoints: Number,
     createdAt: Date,
     updatedAt: Date,
     deletedAt: Date
 })
 
-const User = mongoose.model('User', userSchema)
+module.exports = mongoose.model('User', userSchema)
