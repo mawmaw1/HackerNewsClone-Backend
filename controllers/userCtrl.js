@@ -1,9 +1,6 @@
 const User = require('../models/userModel')
-const bcrypt = require('bcrypt')
 
-exports.createUser = (username, plainPassword) => {
-    const password = bcrypt.hashSync(plainPassword, 10)
-
+exports.createUser = (username, password) => {
     const user = new User({
         username,
         password,
