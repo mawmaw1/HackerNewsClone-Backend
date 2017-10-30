@@ -18,6 +18,7 @@ router.post('/post', (req, res) => {
             return res.end('Post was created successfully!')
         })
         .catch(err => {
+            console.log(err)
             return res.status(500).end('Error when creating post!', err);
         })
 })
