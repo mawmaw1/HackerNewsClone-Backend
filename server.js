@@ -23,18 +23,33 @@ mongoose.Promise = global.Promise
 // App
 const app = express();
 
+app.use((req, res, next) => {
+    next()
+})
+
 require('./passConf')(passport, LocalStrategy)
 
 app.use(cors())
 app.use(morgan('short'))
 app.use(cookieParser())
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
+// app.use(bodyParser.urlencoded({ extended: false }))
+// app.use(bodyParser.raw({type: 'gzip'}))
+// app.use(bodyParser.json())
+var rawBodySaver = function (req, res, buf, encoding) {
+  if (buf && buf.length) {
+    req.rawBody = JSON.parse(buf.toString(encoding || 'utf8'));
+  }
+}
+
+app.use(bodyParser.json({ verify: rawBodySaver }));
+app.use(bodyParser.urlencoded({ verify: rawBodySaver, extended: true }));
+app.use(bodyParser.raw({ verify: rawBodySaver, type: function () { return true } }));
+
 app.use(session({
     secret: 'meownus',
-    resave: true,
+    resave: false,
     saveUninitialized: true,
-    cookie: { secure: true }
+    cookie: { secure: true },
   }))
 app.use(passport.initialize())
 app.use(passport.session())

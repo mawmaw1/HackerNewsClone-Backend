@@ -17,10 +17,8 @@ router.post('/register', (req, res) => {
 })
 
 router.post('/login', passport.authenticate('local'), (req, res) => {
-    console.log(req.user)
-    console.log(req.body)
-    console.log(res.getHeaders())
-    console.log(res.cookie())
+    console.log(req.session)
+    console.log(req.sessionID)
     res.end('ok')
 })
 
@@ -33,8 +31,11 @@ router.get('/ping', (req, res) => {
 })
 
 router.post('/post', (req, res) => {
-    console.log(req.body)
-    postCtrl.createPost(req.body)
+    // console.log(req.headers)
+    // console.log(req.body)
+    console.log(req.rawBody)
+    
+    postCtrl.createPost(req.rawBody)
         .then(post => {
             return res.end('Post was created successfully!')
         })
