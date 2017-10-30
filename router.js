@@ -31,8 +31,7 @@ router.get('/ping', (req, res) => {
 })
 
 router.post('/post', (req, res) => {
-    // console.log(req.headers)
-    // console.log(req.body)
+
     console.log(req.rawBody)
     
     postCtrl.createPost(req.rawBody)
