@@ -32,6 +32,18 @@ router.get('/ping', (req, res) => {
     res.end('pong')
 })
 
+router.post('/post', (req, res) => {
+    console.log(req.body)
+    postCtrl.createPost(req.body)
+        .then(post => {
+            return res.end('Post was created successfully!')
+        })
+        .catch(err => {
+            console.log(err)
+            return res.status(500).end('Error when creating post!', err);
+        })
+})
+
 router.get('/posts', (req, res) => {
     switch (req.body.post_type) {
         case 'story':

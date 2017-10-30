@@ -15,7 +15,9 @@ const api = require('./router')
 const PORT = 8080
 const HOST = '0.0.0.0'
 
-mongoose.connect('mongodb://localhost:27017/hackernews', { useMongoClient: true })
+// mongoose.connect('mongodb://localhost:27017/hackernews', { useMongoClient: true })
+mongoose.connect('mongodb://shared:kukenrbra@ds139585.mlab.com:39585/hnc', { useMongoClient: true });
+
 mongoose.Promise = global.Promise
 
 // App
