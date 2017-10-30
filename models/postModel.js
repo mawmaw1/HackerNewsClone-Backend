@@ -4,7 +4,7 @@ const postSchema = mongoose.Schema({
     username: String,
     post_type: String,
     pwd_hash: String, 
-    post_title: {type: String, required: true},
+    post_title: String,
     post_url: String,
     post_parent: Number,
     hanesst_id: {type: Number, unique: true},
