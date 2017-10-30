@@ -10,9 +10,10 @@ exports.createPost = (post) => {
         post_url: post.post_url,
         post_parent: post.post_parent,
         hanesst_id: post.hanesst_id,
-        post_text: post.post_text
+        post_text: post.post_text,
+        created_at: new Date()
     })  
-    newPost.save()  
+    return newPost.save()  
 }
 
 exports.getPosts = () => {

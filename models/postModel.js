@@ -8,7 +8,8 @@ const postSchema = mongoose.Schema({
     post_url: String,
     post_parent: Number,
     hanesst_id: {type: Number, unique: true},
-    post_text: String
+    post_text: String,
+    created_at: Date
 })
 
 module.exports = mongoose.model('Post', postSchema)

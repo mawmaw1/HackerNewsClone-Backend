@@ -12,13 +12,14 @@ router.post('/user', (req, res) => {
         .catch(res.status(500).end('error'))        
 })
 
-router.post('/posts', (req, res) => {
-    console.log(req.body)
+router.post('/post', (req, res) => {
     postCtrl.createPost(req.body)
         .then(post => {
-            return res.end('User was created successfully!')
+            return res.end('Post was created successfully!')
         })
-        .catch(res.status(500).end('Error when creating post!'))
+        .catch(err => {
+            return res.status(500).end('Error when creating post!', err);
+        })
 })
 
 router.get('/posts', (req, res) => {
