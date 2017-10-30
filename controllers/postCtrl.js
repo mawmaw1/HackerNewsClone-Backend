@@ -11,7 +11,8 @@ exports.createPost = (post) => {
         post_parent: post.post_parent,
         hanesst_id: post.hanesst_id,
         post_text: post.post_text,
-        created_at: new Date()
+        created_at: new Date(),
+        points: 1,
     })  
     return newPost.save()  
 }
@@ -38,8 +39,43 @@ exports.getPosts = (skip, limit) => {
     ])
 }
 
+exports.getCommentsForPost = (id) => {
+    return Post.aggregate( [
+        {
+            $match: { "hanesst_id": id}
+        },
+        {
+            $graphLookup: {
+                from: "posts",
+                startWith: "$hanesst_id",
+                connectFromField: "hanesst_id",
+                connectToField: "post_parent",
+                maxDepth: 2,
+                depthField: "comments",
+                as: "comments"
+            }
+        },
+        {$unwind: "$comments"},
+        {$replaceRoot: {newRoot: "$comments"}},
+        {
+            $match: {"post_parent" : id}
+        },
+        {
+            $graphLookup: {
+                from: "posts",
+                startWith: "$hanesst_id",
+                connectFromField: "hanesst_id",
+                connectToField: "post_parent",
+                maxDepth: 2,
+                depthField: "comments",
+                as: "comments"
+            }
+        }
+    ])
+}
+
 exports.getPost = (postId) => {
-    return Post.findById(postId).where('deletedAt').equals(null)
+    return Post.findById(postId)
 }
 
 exports.deletePost = (postId) => {

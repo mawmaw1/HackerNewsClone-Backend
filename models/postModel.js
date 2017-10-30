@@ -9,7 +9,8 @@ const postSchema = mongoose.Schema({
     post_parent: Number,
     hanesst_id: {type: Number, unique: true},
     post_text: String,
-    created_at: Date
+    created_at: Date,
+    points: Number,
 })
 
 module.exports = mongoose.model('Post', postSchema)

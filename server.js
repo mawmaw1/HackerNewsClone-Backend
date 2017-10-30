@@ -8,7 +8,7 @@ const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const passport = require('passport')
-const LocalStrategy = require('passport-local').Strategy
+// const LocalStrategy = require('passport-local').Strategy
 
 const api = require('./router')
 // Constants

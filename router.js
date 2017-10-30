@@ -30,10 +30,40 @@ router.get('/ping', (req, res) => {
     res.end('pong')
 })
 
-router.post('/post', (req, res) => {
+router.get('/post/:id', (req, res) =>{
+    const id = req.params.id;
+    var postRes = {
+        post: {},
+        comments: []
+    }
+    postCtrl.getPost(id)
+        .then(post => {
+            postRes.post = post
+            return postCtrl.getCommentsForPost(post.hanesst_id)
+        })
+        .then(comments => {
+            postRes.comments = comments
+            res.json(postRes)
+        })
+        .catch(err => {
+            console.log(err);
+            return res.status(500).end('Error when getting post!', err);
+        })
+})
 
-    console.log(req.rawBody)
-    
+router.get('/comments/:id', (req, res) =>{
+    const id = parseInt(req.params.id);
+    postCtrl.getCommentsForPost(id)
+        .then(comments => {
+            res.json(comments);
+        })
+        .catch(err => {
+            console.log(err);
+            return res.status(500).end('Error when creating post!', err);
+        })
+})
+
+router.post('/post', (req, res) => {
     postCtrl.createPost(req.rawBody)
         .then(post => {
             return res.end('Post was created successfully!')
