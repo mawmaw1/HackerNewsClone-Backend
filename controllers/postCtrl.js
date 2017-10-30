@@ -16,8 +16,26 @@ exports.createPost = (post) => {
     return newPost.save()  
 }
 
-exports.getPosts = () => {
-    return Post.find({}, 'title content karmaPoints createdAt').where('deletedAt').equals(null)
+exports.getPosts = (skip, limit) => {
+    return Post.aggregate( [
+        {$match: { 
+                "post_type": "story",
+            }
+        },
+        {$skip: skip},
+        {$limit: limit}, 
+        {
+            $graphLookup: {
+                from: "posts",
+                startWith: "$hanesst_id",
+                connectFromField: "hanesst_id",
+                connectToField: "post_parent",
+                maxDepth: 2,
+                depthField: "comments",
+                as: "comments"
+            }
+        }
+    ])
 }
 
 exports.getPost = (postId) => {

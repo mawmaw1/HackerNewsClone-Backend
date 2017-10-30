@@ -45,20 +45,15 @@ router.post('/post', (req, res) => {
         })
 })
 
-router.get('/posts', (req, res) => {
-    switch (req.body.post_type) {
-        case 'story':
-            // her
-        break
-        case 'comment':
-        break
-        case 'poll':
-        break
-        case 'pollopt':
-        break
-        default:
-            res.status(401).end('bad request')
-    }
+router.post('/posts', (req, res) => {
+    postCtrl.getPosts(req.rawBody.skip, req.rawBody.limit)
+        .then(posts => {
+            res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' })
+            res.end(JSON.stringify(posts, null, 2));
+        })
+        .catch(err => {
+            console.log(err)
+        })
 })
 
 module.exports = router
