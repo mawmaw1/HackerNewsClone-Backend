@@ -1,18 +1,14 @@
 const mongoose = require('mongoose')
 
 const postSchema = mongoose.Schema({
-    title: { type: String, required: true },
-    content: String,
-    url: String,
     username: String,
-    karmaPoints: Number,
-    comments: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Comment'
-    }],
-    createdAt: Date,
-    updatedAt: Date,
-    deletedAt: Date
+    post_type: String,
+    pwd_hash: String, 
+    post_title: {type: String, required: true},
+    post_url: String,
+    post_parent: Number,
+    hanesst_id: {type: Number, unique: true},
+    post_text: String
 })
 
 module.exports = mongoose.model('Post', postSchema)

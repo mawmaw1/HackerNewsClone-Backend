@@ -1,15 +1,18 @@
 const Post = require('../models/postModel')
+const mongoose = require('mongoose')
 
-exports.createPost = (title, content, url, username) => {
-    const post = new Post({
-        title,
-        content,
-        url,
-        username,
-        karmaPoints: 1,
-        createdAt: new Date(),
-    })
-    return post.save()
+exports.createPost = (post) => {
+    const newPost = new Post({
+        username: post.username,
+        post_type: post.post_type,
+        pwd_hash: post.pwd_hash, 
+        post_title: post.post_title,
+        post_url: post.post_url,
+        post_parent: post.post_parent,
+        hanesst_id: post.hanesst_id,
+        post_text: post.post_text
+    })  
+    newPost.save()  
 }
 
 exports.getPosts = () => {
