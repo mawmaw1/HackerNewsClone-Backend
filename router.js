@@ -13,6 +13,7 @@ router.post('/user', (req, res) => {
 })
 
 router.post('/post', (req, res) => {
+    console.log(req.body)
     postCtrl.createPost(req.body)
         .then(post => {
             return res.end('Post was created successfully!')
