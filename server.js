@@ -27,14 +27,12 @@ app.use((req, res, next) => {
     next()
 })
 
-require('./passConf')(passport, LocalStrategy)
+//require('./passConf')(passport, LocalStrategy)
 
 app.use(cors())
 app.use(morgan('short'))
 app.use(cookieParser())
-// app.use(bodyParser.urlencoded({ extended: false }))
-// app.use(bodyParser.raw({type: 'gzip'}))
-// app.use(bodyParser.json())
+
 var rawBodySaver = function (req, res, buf, encoding) {
   if (buf && buf.length) {
     req.rawBody = JSON.parse(buf.toString(encoding || 'utf8'));
