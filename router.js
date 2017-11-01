@@ -75,14 +75,33 @@ router.post('/post', (req, res) => {
         })
 })
 
-router.post('/posts', (req, res) => {
-    postCtrl.getPosts(req.rawBody.skip, req.rawBody.limit)
+router.get('/posts/:skip/:limit', (req, res) => {
+    const skip = parseInt(req.params.skip)
+    const limit = parseInt(req.params.limit)    
+    postCtrl.getPosts(skip, limit)
         .then(posts => {
             res.json(posts)
         })
         .catch(err => {
             console.log(err)
             res.status(500).end('error')
+        })
+})
+
+router.get('/latest', (req, res) =>{
+    postCtrl.getLatestPost()
+        .then(posts => {
+            if (posts === undefined) {
+                res.end("Error when getting latest entry!")
+            } else if (posts.length === 0) {
+                res.end("There was 0 entries in the database.")
+            } else {
+                res.json(posts[0].hanesst_id)
+            }
+        })
+        .catch(err => {
+            console.log(err)
+            res.status(500).end(err)
         })
 })
 

@@ -39,6 +39,10 @@ exports.getPosts = (skip, limit) => {
     ])
 }
 
+exports.getLatestPost = () => {
+    return Post.find({}).sort({_id:-1}).limit(1)
+}
+
 exports.getCommentsForPost = (id) => {
     return Post.aggregate( [
         {
