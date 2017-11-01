@@ -7,23 +7,24 @@ const commentCtrl = require('./controllers/commentCtrl')
 const userCtrl = require('./controllers/userCtrl')
 
 router.post('/register', (req, res) => {
-    // userCtrl.createUser(req.body.username, req.body.password)
-    //     .then(user => {
-    //         return res.end('ok')
-    //     })
-    //     .catch(res.status(500).end('error'))
-    console.log(req.body)
-    res.end('bra kuk')
+    userCtrl.createUser(req.body.username, req.body.password)
+        .then(user => {
+            req.login(user, err => {
+                if (err) return res.status(500).end('ikke bra')
+                res.end('ok')
+            })
+        })
+        .catch(err => {
+            console.log(err)
+            res.status(500).end('error')
+        })
 })
 
 router.post('/login', passport.authenticate('local'), (req, res) => {
-    console.log(req.session)
-    console.log(req.sessionID)
     res.end('ok')
 })
 
 router.get('/ping', (req, res) => {
-    console.log(req.user)
     if (req.user) {
         res.json(req.user)
     }
@@ -77,11 +78,11 @@ router.post('/post', (req, res) => {
 router.post('/posts', (req, res) => {
     postCtrl.getPosts(req.rawBody.skip, req.rawBody.limit)
         .then(posts => {
-            res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' })
-            res.end(JSON.stringify(posts, null, 2));
+            res.json(posts)
         })
         .catch(err => {
             console.log(err)
+            res.status(500).end('error')
         })
 })
 
