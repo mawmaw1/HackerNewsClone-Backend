@@ -38,8 +38,8 @@ var rawBodySaver = function (req, res, buf, encoding) {
   }
 }
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({ verify: rawBodySaver }));
+app.use(bodyParser.urlencoded({ verify: rawBodySaver, extended: true }));
 app.use(bodyParser.raw({ verify: rawBodySaver, type: function () { return true } }));
 app.use(express.static('./public'))
 
