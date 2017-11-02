@@ -96,6 +96,10 @@ router.get('/posts/:skip/:limit', (req, res) => {
         })
 })
 
+router.get('/status', (req, res) => {
+    res.end("Alive");
+})
+
 router.get('/latest', (req, res) =>{
     postCtrl.getLatestPost()
         .then(posts => {
