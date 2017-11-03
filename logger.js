@@ -7,7 +7,7 @@ exports.sendLog = (levelNum, message, err) => {
                 levelNum === 2 ? 'Warning' :
                 levelNum === 3 ? 'Error' : ''
     let log = { level, message, err, host: os.hostname() }
-    fetch('http://139.59.211.36:8089/log', { method: 'POST', body: JSON.stringify(log), headers: {'Content-Type': 'application/json'} })
+    fetch('http://172.18.0.3:8080/log', { method: 'POST', body: JSON.stringify(log), headers: {'Content-Type': 'application/json'} })
         .catch(err => {
             console.log(err)
         })
