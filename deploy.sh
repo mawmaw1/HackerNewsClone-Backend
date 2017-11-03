@@ -16,4 +16,4 @@ if (( ${BUILD_NUMBER} >= 2 )); then
 fi
 # get the newest version of the containerized web application and run it
 docker pull ${DOCKER_ID}/hncbackend:${BUILD_NUMBER}
-docker run -d -ti -p 8081:8080 ${DOCKER_ID}/hncbackend:${BUILD_NUMBER}
+docker run --name hcnbackend --network hncnetwork -d -ti -p 8081:8080 ${DOCKER_ID}/hncbackend:${BUILD_NUMBER}
