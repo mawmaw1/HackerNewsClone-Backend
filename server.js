@@ -9,6 +9,7 @@ const bodyParser = require('body-parser')
 const session = require('express-session')
 const passport = require('passport')
 
+const metrics = require('./metrics')
 const api = require('./router')
 // Constants
 const PORT = 8080
@@ -60,6 +61,6 @@ app.get('/', (req, res) => {
 })
 
 app.use(api)
-
+app.use(metrics)
 app.listen(PORT, HOST)
 console.log(`Running on http://${HOST}:${PORT}`)
