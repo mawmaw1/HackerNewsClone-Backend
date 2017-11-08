@@ -23,6 +23,9 @@ mongoose.Promise = global.Promise
 const app = express();
 
 app.use((req, res, next) => {
+    //metric for http request ms
+    res.locals.startEpoch = Date.now()
+    console.log("pre")
     next()
 })
 
@@ -59,8 +62,22 @@ app.get('/', (req, res) => {
     })
 })
 
-app.use(api)
 app.use(metrics.router)
+app.use(api)
+
+// metric for httprequest end
+app.use((req, res, next) => {
+    const responseTimeInMs = Date.now() - res.locals.startEpoch
+    metrics.httpRequestDurationMicroseconds
+        .labels(req.method, req.route.path, res.statusCode)
+        .observe(responseTimeInMs)
+    console.log("post")
+    next()
+})
+
+
+
+
 
 app.listen(PORT, HOST)
 console.log(`Running on http://${HOST}:${PORT}`)

@@ -1,5 +1,4 @@
 const client = require('prom-client');
-const register = new client.Registry();
 const express = require('express')
 const router = express.Router()
 
@@ -11,7 +10,7 @@ router.get('/metrics', (req, res) => {
 });
 
 //enabling default metrics
-client.collectDefaultMetrics({ register })
+client.collectDefaultMetrics()
 
 
 const postCounter = new client.Counter({
@@ -20,9 +19,16 @@ const postCounter = new client.Counter({
     labelNames: ['post_counter']
 })
 
+const httpRequestDurationMicroseconds = new client.Histogram({
+    name: 'http_request_duration_ms',
+    help: 'Duration of HTTP requests in ms',
+    labelNames: ['method', 'route', 'code'],
+    buckets: [0.10, 5, 15, 50, 100, 200, 300, 400, 500]  // buckets for response time from 0.1ms to 500ms
+})
 
 
 module.exports = {
     router:router,
-    postCounter:postCounter
+    postCounter:postCounter,
+    httpRequestDurationMicroseconds:httpRequestDurationMicroseconds
 }

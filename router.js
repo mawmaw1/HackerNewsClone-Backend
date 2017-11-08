@@ -71,19 +71,21 @@ router.get('/comments/:id', (req, res) =>{
         })
 })
 
-router.post('/post', (req, res) => {
+router.post('/post', (req, res, next) => {
     postCtrl.createPost(req.rawBody)
         .then(post => {
             res.end('Post was created successfully!')
             logger.sendLog(1, `New post, type: ${post.post_type}`, null)
             metrics.postCounter.inc({
             })
+            next()
         })
         .catch(err => {
             console.log(err)
             res.status(500).end('Error when creating post!', err);
             logger.sendLog(3, 'Error when creating post!', err)
         })
+
 })
 
 router.get('/posts/:skip/:limit', (req, res) => {
@@ -100,8 +102,10 @@ router.get('/posts/:skip/:limit', (req, res) => {
         })
 })
 
-router.get('/status', (req, res) => {
+router.get('/status', (req, res, next) => {
     res.end("Alive");
+    next()
+
 })
 
 router.get('/latest', (req, res) =>{
