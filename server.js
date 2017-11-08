@@ -15,8 +15,8 @@ const PORT = 8080
 const HOST = '0.0.0.0'
 
 // mongoose.connect('mongodb://localhost:27017/hnc', { useMongoClient: true })
-mongoose.connect('mongodb://shared:kukenrbra@ds139585.mlab.com:39585/hnc', { useMongoClient: true });
-// mongoose.connect('mongodb://shared:kukenrbra@139.59.211.36:27017/hnc', { useMongoClient: true });
+// mongoose.connect('mongodb://shared:kukenrbra@ds139585.mlab.com:39585/hnc', { useMongoClient: true });
+mongoose.connect('mongodb://shared:kukenrbra@139.59.211.36:27017/hnc', { useMongoClient: true });
 mongoose.Promise = global.Promise
 
 // App
