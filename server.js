@@ -25,7 +25,6 @@ const app = express();
 app.use((req, res, next) => {
     //metric for http request ms
     res.locals.startEpoch = Date.now()
-    console.log("pre")
     next()
 })
 
@@ -75,7 +74,6 @@ app.use((req, res, next) => {
     metrics.httpRequestDurationMicroseconds
         .labels(req.method, req.route.path, res.statusCode)
         .observe(responseTimeInMs)
-    console.log("post")
     next()
 })
 

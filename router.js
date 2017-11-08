@@ -84,6 +84,7 @@ router.post('/post', (req, res, next) => {
             console.log(err)
             res.status(500).end('Error when creating post!', err);
             logger.sendLog(3, 'Error when creating post!', err)
+            next()
         })
 
 })
