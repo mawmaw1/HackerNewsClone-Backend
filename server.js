@@ -8,7 +8,6 @@ const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const passport = require('passport')
-
 const metrics = require('./metrics')
 const api = require('./router')
 // Constants
@@ -61,6 +60,7 @@ app.get('/', (req, res) => {
 })
 
 app.use(api)
-app.use(metrics)
+app.use(metrics.router)
+
 app.listen(PORT, HOST)
 console.log(`Running on http://${HOST}:${PORT}`)

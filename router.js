@@ -6,6 +6,8 @@ const postCtrl = require('./controllers/postCtrl')
 const commentCtrl = require('./controllers/commentCtrl')
 const userCtrl = require('./controllers/userCtrl')
 const logger = require('./logger')
+const metrics = require('./metrics')
+
 
 router.post('/register', (req, res) => {
     userCtrl.createUser(req.body.username, req.body.password)
@@ -74,6 +76,8 @@ router.post('/post', (req, res) => {
         .then(post => {
             res.end('Post was created successfully!')
             logger.sendLog(1, `New post, type: ${post.post_type}`, null)
+            metrics.postCounter.inc({
+            })
         })
         .catch(err => {
             console.log(err)

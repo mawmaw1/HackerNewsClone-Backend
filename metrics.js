@@ -6,13 +6,23 @@ const router = express.Router()
 
 
 router.get('/metrics', (req, res) => {
-    res.set('Content-Type', register.contentType);
-    res.end(register.metrics());
+    res.set('Content-Type', client.register.contentType);
+    res.end(client.register.metrics());
 });
-
 
 //enabling default metrics
 client.collectDefaultMetrics({ register })
 
 
-module.exports = router
+const postCounter = new client.Counter({
+    name: 'post_counter',
+    help: 'Total number of times /post',
+    labelNames: ['post_counter']
+})
+
+
+
+module.exports = {
+    router:router,
+    postCounter:postCounter
+}
