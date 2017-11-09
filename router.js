@@ -103,6 +103,19 @@ router.get('/posts/:skip/:limit', (req, res) => {
         })
 })
 
+router.post('/post/vote', (req, res) => {
+    const id = req.rawBody.id
+    const vote = req.rawBody.vote
+    postCtrl.votePost(id, vote)
+        .then(post => {
+            res.json(post)
+        })
+        .catch(err => {
+            res.status(500).end("Error when voting on post! " + err)
+            logger.sendLog(3, "Error when voting on post!", err)
+        })
+})
+
 router.get('/status', (req, res, next) => {
     res.end("Alive");
     next()
