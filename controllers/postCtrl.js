@@ -19,6 +19,7 @@ exports.createPost = (post) => {
 
 exports.getPosts = (skip, limit) => {
     return Post.aggregate( [
+        {$sort: {_id: -1}},
         {$match: { 
                 "post_type": "story",
             }
