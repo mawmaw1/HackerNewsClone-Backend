@@ -21,7 +21,7 @@ router.post('/register', (req, res) => {
         .catch(err => {
             console.log(err)
             res.status(500).end('error')
-            logger.sendLog(3, `Error register new user: ${user.username}`, err)
+            logger.sendLog(3, `Error register new user: ${req.body.username}`, err)
         })
 })
 
@@ -75,7 +75,7 @@ router.post('/post', (req, res, next) => {
     postCtrl.createPost(req.rawBody)
         .then(post => {
             res.end('Post was created successfully!')
-            logger.sendLog(1, `New post, type: ${post.post_type}`, null)
+            // logger.sendLog(1, `New post, type: ${post.post_type}`, null)
             metrics.postCounter.inc({
             })
             next()
