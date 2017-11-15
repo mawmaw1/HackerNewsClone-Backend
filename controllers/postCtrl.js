@@ -79,6 +79,19 @@ exports.getCommentsForPost = (id) => {
     ])
 }
 
+exports.votePost = (id, vote) => {
+    return Post.findOne({_id: id})
+        .then(post => {
+            if (vote === 'up') {
+                post.points = post.points + 1
+            } else if (vote === 'down') {
+                post.points = post.points - 1
+            }
+            return Post.findOneAndUpdate({'_id': post._id}, {$set: {points: post.points}}, { new: true})     
+        })
+
+}
+
 exports.getPost = (postId) => {
     return Post.findById(postId)
 }
