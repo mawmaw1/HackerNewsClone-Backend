@@ -31,7 +31,8 @@ app.use((req, res, next) => {
 require('./passConf')(passport)
 
 const corsOptions = {
-    origin: true
+    origin: true,
+    credentials: true
 }
 
 app.use(cors(corsOptions))
@@ -47,7 +48,6 @@ var rawBodySaver = function (req, res, buf, encoding) {
 app.use(bodyParser.json({ verify: rawBodySaver }));
 app.use(bodyParser.urlencoded({ verify: rawBodySaver, extended: true }));
 app.use(bodyParser.raw({ verify: rawBodySaver, type: function () { return true } }));
-app.use(express.static('./public'))
 
 app.use(session({
     secret: 'meownus',
